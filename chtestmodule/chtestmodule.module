@@ -9,7 +9,8 @@ function chtestmodule_form_alter(&$form, FormStateInterface $form_state, $form_i
   if (isset($form['acquia_contenthub_subscriber_sync'])) {
     $form['acquia_contenthub_subscriber_sync']['#access'] = TRUE;
 
-
+    $submit = array_search('acquia_contenthub_subscriber_sync_state_submit', $form['actions']['submit']['#submit']);
+    $form['actions']['submit']['#submit'][$submit] = 'acquia_contenthub_unsubscribe_sync_state_submit';
   print_r($form['actions']['submit']['#submit']);
   die('stop');
     }
