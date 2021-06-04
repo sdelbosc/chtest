@@ -1,0 +1,8 @@
+name: Test ContentHub Unsubscribe
+description: Allows for individual entities to be disconnected from pushed updates.
+package: Acquia ContentHub (Experimental)
+type: module
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - acquia_contenthub_subscriber
+
