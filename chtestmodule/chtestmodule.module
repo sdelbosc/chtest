@@ -16,6 +16,9 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Implements hook_form_alter().
  */
+function chtestmodule_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+die('stop');
+}
 function chtestmodule_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 die('ici');
   // This is an entity form.
