@@ -6,7 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
  * Implements hook_form_alter().
  */
 function chtestmodule_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-echo 'sylvain';
   if (isset($form['acquia_contenthub_subscriber_sync'])) {
     $form['acquia_contenthub_subscriber_sync']['#access'] = TRUE;
   }
