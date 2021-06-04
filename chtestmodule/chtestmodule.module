@@ -17,27 +17,31 @@ use Drupal\Core\Form\FormStateInterface;
  * Implements hook_form_alter().
  */
 function chtestmodule_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-die('ici');
+echo '1';
   // This is an entity form.
   if (!in_array('Drupal\Core\Entity\EntityFormInterface', class_implements($form_state->getFormObject()))) {
     return;
   }
+echo '2';
   /** @var \Drupal\Core\Entity\EntityFormInterface $object */
   $object = $form_state->getFormObject();
   $entity = $object->getEntity();
   if (!$entity) {
     return;
   }
+echo '3';
   // If no id assigned yet, it's not remote.
   if (!$entity->id()) {
     return;
   }
+echo '4';
   /** @var \Drupal\acquia_contenthub_subscriber\SubscriberTracker $tracker */
   $tracker = \Drupal::service('acquia_contenthub_subscriber.tracker');
   // Don't alter entities not tracked by the subscriber.
   if (!$tracker->isTracked($entity->uuid())) {
     return;
   }
+echo '5';
   $status = $tracker->getStatusByTypeId($entity->getEntityTypeId(), $entity->id());
   $status = $status === SubscriberTracker::AUTO_UPDATE_DISABLED ? TRUE : FALSE;
   $form['acquia_contenthub_subscriber_sync'] = [
