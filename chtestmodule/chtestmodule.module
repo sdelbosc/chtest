@@ -50,7 +50,7 @@ echo '5';
     '#description' => t("Disabling auto updating will prevent this entity from being updated by Acquia ContentHub in the future."),
     '#default_value' => $status,
     '#weight' => 1000,
-    '#access' => FALSE,
+    '#access' => TRUE,
   ];
   if (isset($form['actions']['submit'])) {
     $form['actions']['submit']['#submit'][] = 'acquia_contenthub_subscriber_sync_state_submit';
