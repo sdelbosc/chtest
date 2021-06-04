@@ -8,5 +8,41 @@ use Drupal\Core\Form\FormStateInterface;
 function chtestmodule_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if (isset($form['acquia_contenthub_subscriber_sync'])) {
     $form['acquia_contenthub_subscriber_sync']['#access'] = TRUE;
+
+
+  print_r($form['actions']);
+  die('stop');
+  $form['actions']['submit']['#submit'][] = '_acquia_contenthub_subscriber_sync_state_submit';
+    }
+}
+
+/**
+ * Submit handler for dealing with contenthub auto updating status.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current form state.
+ *
+ * @throws \Exception
+ */
+function _acquia_contenthub_unsubscribe_sync_state_submit(array &$form, FormStateInterface $form_state) {
+  if (!$form_state->hasValue('acquia_contenthub_subscriber_sync')) {
+    return;
+  }
+  /** @var \Drupal\Core\Entity\EntityFormInterface $object */
+  $object = $form_state->getFormObject();
+  $entity = $object->getEntity();
+  if (!$entity) {
+    return;
+  }
+  /** @var \Drupal\acquia_contenthub_subscriber\SubscriberTracker $tracker */
+  $tracker = \Drupal::service('acquia_contenthub_subscriber.tracker');
+  if ($form_state->getValue('acquia_contenthub_subscriber_sync')) {
+    $tracker->setStatusByTypeId($entity->getEntityTypeId(), $entity->id(), SubscriberTracker::AUTO_UPDATE_DISABLED);
+  }
+  else {
+    $tracker->setStatusByTypeId($entity->getEntityTypeId(), $entity->id(), SubscriberTracker::QUEUED);
+    // @todo re-enqueue the entity to be updated to the current version in the services.
   }
 }
