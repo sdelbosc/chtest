@@ -17,6 +17,7 @@ use Drupal\Core\Form\FormStateInterface;
  * Implements hook_form_alter().
  */
 function chtestmodule_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+print_r('ici');
   // This is an entity form.
   if (!in_array('Drupal\Core\Entity\EntityFormInterface', class_implements($form_state->getFormObject()))) {
     return;
